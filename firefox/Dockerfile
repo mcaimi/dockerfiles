@@ -14,7 +14,8 @@
 #           firefox:latest
 #           
 # Change UID/GID in the container to match the permissions of the exported
-# downloads and home volumes.
+# downloads and home volumes, or update the local mount path to match uid a
+# and gid to 1001
 #
 
 FROM base/archlinux:latest
