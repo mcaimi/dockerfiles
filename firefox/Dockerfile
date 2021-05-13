@@ -1,8 +1,9 @@
 # Mozilla Firefox in a container, with pulseaudio passthrough support
 #
-# docker build -t firefox:latest .
+# podman build -t firefox:latest .
 #
-# docker run --name firefox --hostname firefox.domain.net -d \
+# Container can be run with a command similar to this:
+# podman run --name firefox --hostname firefox.domain.net -d \
 #           -v /var/run/dbus:/var/run/dbus \
 #           -v /run/user/<uid>/pulse:/run/user/<uid>/pulse \
 #           -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -11,15 +12,16 @@
 #           -v /home/<username>/Downloads:/home/firefox/Downloads:rw \
 #           -v /home/<username>/.mozilla:/home/firefox/.mozilla:rw \
 #           -v /dev/shm:/dev/shm \
-#           firefox:latest
-#           
+#           localhost/firefox:latest
+#
 # Change UID/GID in the container to match the permissions of the exported
 # downloads and home volumes, or update the local mount path to match uid a
 # and gid to 1001
 #
+#
 
-FROM base/archlinux:latest
-MAINTAINER Marco <https://github.com/mcaimi>
+FROM docker.io/library/archlinux:latest
+MAINTAINER <https://github.com/mcaimi>
 LABEL description="Firefox in a Container"
 
 # define user to be used as owner of the contained process
