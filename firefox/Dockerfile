@@ -55,8 +55,9 @@ COPY config/mozilla.cfg /usr/lib/firefox/
 COPY config/autoconfig.js /usr/lib/firefox/defaults/pref/
 
 # set volume
-RUN mkdir -p /home/$user/Downloads && chown -Rv $user:$group /home/$user
-RUN mkdir -p /home/$user/.mozilla && chown -Rv $user:$group /home/$user
+RUN mkdir -p /home/$user/Downloads && chown -Rv $user:$group /home/$user; \
+  mkdir -p /home/$user/.mozilla && chown -Rv $user:$group /home/$user
+
 VOLUME /home/$user/Downloads
 VOLUME /home/$user/.mozilla
 
