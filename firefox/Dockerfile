@@ -20,7 +20,7 @@
 #
 #
 
-FROM docker.io/library/archlinux:latest
+FROM quay.io/marcocaimi/archlinux:latest
 MAINTAINER <https://github.com/mcaimi>
 LABEL description="Firefox in a Container"
 
