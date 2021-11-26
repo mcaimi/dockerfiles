@@ -12,4 +12,31 @@ It is based on the latest Archlinux base image from docker.io, and optionally su
 
 Currently it is tested on Xorg only.
 
+## UBI8 based Debug Container for OCP4
+
+[![Docker Repository on Quay](https://quay.io/repository/marcocaimi/ocp-debug-ubi8/status "Docker Repository on Quay")](https://quay.io/repository/marcocaimi/ocp-debug-ubi8)
+
+A custom debug container that can be used to do debugging work on a running CoreOS Openshift Node instead of the standard one shipped with OCP.
+It is based on the RedHat Universal Base Image 8, with some added tools:
+
+  * EPEL repo for rhel8 baked in
+  * openJDK 11 development kit
+  * GCC & GDB
+  * tcpdump
+  * iproute
+  * jq
+  * python 3.9
+  * scapy
+  * curlie & httpie
+  * glances
+  * rsync & rclone
+
+To run it simply use the Openshift Command Line tool:
+
+```bash
+  $ oc debug node/<node-id> --image quay.io/marcocaimi/ocp-debug-ubi8:ubi8
+```
+
+Currently it is still in development, so expect bugs here and there
+
 
