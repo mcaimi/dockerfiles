@@ -10,7 +10,6 @@ RUN dnf update -y && \
 RUN dnf install -y \
         java-11-openjdk-devel \
         iproute \
-        curlie \
         python39-pip \
         nmap \
         nmap-ncat \
@@ -21,9 +20,11 @@ RUN dnf install -y \
         rclone \
         neovim \
         gdb \
+        skopeo \
+        hping3 \
         jq && dnf clean all
 
-RUN pip3 install httpie glances scapy
+RUN pip3 install httpie glances scapy matplotlib cryptography ipython
 
 VOLUME /host
 WORKDIR /root/

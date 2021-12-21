@@ -29,6 +29,7 @@ It is based on the RedHat Universal Base Image 8, with some added tools:
   * scapy
   * curlie & httpie
   * glances
+  * hping3
   * rsync & rclone
 
 To run it simply use the Openshift Command Line tool:
