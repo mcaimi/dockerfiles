@@ -1,19 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  annotations:
-    debug.openshift.io/source-container: container-00
-    debug.openshift.io/source-resource: /v1, Resource=nodes/ip-10-0-148-189.us-east-2.compute.internal
-    openshift.io/scc: node-exporter
-  name: ip-10-0-148-189us-east-2computeinternal-debug
-  namespace: argocd
+  name: minikube-debug-pod
+  namespace: tools
 spec:
   containers:
   - command:
     - /bin/sh
-    image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e44074f21e0cca6464e50cb6ff934747e0bd11162ea01d522433a1a1ae116103
+    image: quay.io/marcocaimi/ocp-debug-ubi8:ubi8
     imagePullPolicy: IfNotPresent
-    name: container-00
+    name: debugpod
     resources: {}
     securityContext:
       privileged: true
@@ -27,15 +23,13 @@ spec:
     - mountPath: /host
       name: host
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-fn6dv
+      name: kube-api-access
       readOnly: true
   dnsPolicy: ClusterFirst
   enableServiceLinks: true
   hostNetwork: true
   hostPID: true
-  imagePullSecrets:
-  - name: default-dockercfg-p6r9p
-  nodeName: ip-10-0-148-189.us-east-2.compute.internal
+  nodeName: minikube
   preemptionPolicy: PreemptLowerPriority
   priority: 0
   restartPolicy: Never
@@ -58,7 +52,7 @@ spec:
       path: /
       type: Directory
     name: host
-  - name: kube-api-access-fn6dv
+  - name: kube-api-access
     projected:
       defaultMode: 420
       sources:
@@ -76,8 +70,3 @@ spec:
               apiVersion: v1
               fieldPath: metadata.namespace
             path: namespace
-      - configMap:
-          items:
-          - key: service-ca.crt
-            path: service-ca.crt
-          name: openshift-service-ca.crt
