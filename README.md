@@ -1,5 +1,11 @@
 # Various Dockerfiles.
 
+## Chroma Vector Database for AI
+
+[![Docker Repository on Quay](https://quay.io/repository/marcocaimi/chromadb/status "Docker Repository on Quay")](https://quay.io/repository/marcocaimi/chromadb)
+
+Fedora-based docker container built to host ChromaDB instances.
+
 ## Firefox
 
 [![Docker Repository on Quay](https://quay.io/repository/marcocaimi/firefox/status "Docker Repository on Quay")](https://quay.io/repository/marcocaimi/firefox)
