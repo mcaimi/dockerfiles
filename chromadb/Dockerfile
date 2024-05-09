@@ -2,7 +2,7 @@ FROM docker.io/library/fedora:latest as chromabuilder
 
 ENV appuser chromadb
 ENV appgroup chromadb
-ENV chromaversion 0.4.24
+ENV chromaversion 0.5.0
 
 USER root
 RUN dnf install -y python3-pip python3-devel lapack-devel gcc g++ gfortran && dnf clean all
