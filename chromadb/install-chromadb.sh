@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USR=${1:-chromadb}
-CHROMAVER=${2:-1.0.3}
+CHROMAVER=${2:-1.0.7}
 
 python3 -m venv $HOME/.virtualenv/chromadb
 source $HOME/.virtualenv/chromadb/bin/activate
