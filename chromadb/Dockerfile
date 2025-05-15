@@ -28,7 +28,7 @@ RUN dnf install -y python3-pip lapack
 RUN groupadd $appgroup && useradd -m -g $appgroup $appuser
 COPY --from=chromabuilder /home/$appuser/.virtualenv /home/$appuser/.virtualenv
 ADD ./run-chromadb.sh /home/$appuser/
-RUN chown -R $appuser /home/$appuser/run-chromadb.sh && chmod u+rwx /home/$appuser/run-chromadb.sh
+RUN chown -R $appuser /home/$appuser/run-chromadb.sh && chmod ugo+rwx /home/$appuser/run-chromadb.sh
 
 RUN mkdir -p /chroma_data && chown -R $appuser /chroma_data
 VOLUME /chroma_data
