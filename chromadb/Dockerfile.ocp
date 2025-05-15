@@ -1,0 +1,58 @@
+# Use Fedora as base image
+FROM fedora:latest AS chromabuilder
+
+ENV appuser=1001 \
+    chromaversion=1.0.9 \
+    kubever=openshift
+
+# Switch to root user for installation
+USER root
+
+# Install necessary dependencies
+RUN dnf install -y python3-pip python3-devel lapack-devel gcc g++ gfortran && dnf clean all
+
+# add the install script
+ADD ./install-chromadb.sh /tmp/
+RUN chown 1001 /tmp/install-chromadb.sh && chmod u+rwx /tmp/install-chromadb.sh
+
+# Switch back to the app user
+USER 1001
+WORKDIR /tmp/
+
+# Run the ChromaDB installation script
+RUN /tmp/install-chromadb.sh $appuser $chromaversion $kubever
+
+# Use Fedora as base image again
+FROM fedora:latest
+
+# Set environment variables for app user, group, and ChromaDB host and port
+ENV appuser=1001 \
+    appgroup=0 \
+    CHROMAHOST=localhost \
+    CHROMAPORT=8080 \
+    KUBEVER=openshift
+
+# Switch to root user for installation of dependencies
+USER root
+RUN dnf install -y python3-pip lapack
+
+# copy the virtualenv directory from the builder stage
+COPY --from=chromabuilder /tmp/.virtualenv /tmp/.virtualenv
+
+# Add the run script and change ownership to the app user
+ADD ./run-chromadb.sh /tmp/
+RUN chown -R $appuser:0 /tmp/run-chromadb.sh && \
+    chown -R $appuser:0 /tmp/.virtualenv && chmod +x /tmp/run-chromadb.sh
+
+# Create a volume for ChromaDB data storage
+RUN mkdir -p /chroma_data && \
+    chown -R $appuser /chroma_data && chmod -R g=u /chroma_data
+VOLUME /chroma_data
+
+# Switch back to the app user and set working directory
+USER $appuser
+WORKDIR /tmp
+
+# Set entrypoint and command for running ChromaDB
+ENTRYPOINT ["/tmp/run-chromadb.sh"]
+CMD ["$CHROMAHOST", "$CHROMAPORT", "$KUBEVER"]
